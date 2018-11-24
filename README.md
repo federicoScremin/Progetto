@@ -1,2 +1,2 @@
 # Progetto
-Web app con metodo MEAN (MongoDB, Express, AngularJS, NodeJS) + API REST
+Sviluppo di una web app con metodo MEAN (MongoDB, Express, AngularJS, NodeJS) + API REST
