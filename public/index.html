@@ -13,9 +13,8 @@
     <!-- SCROLLS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
     <style>
-        html                    { overflow-y:scroll; }
-        body                    { padding-top:50px; }
-        #temperature-list              { margin-bottom:30px; }
+        html{ overflow-y:scroll; }
+        #temperature-list{ margin-bottom:30px; }
     </style>
 
     <!-- SPELLS -->
@@ -40,7 +39,7 @@
                 <!-- LOOP OVER THE TEMPERATURES IN $scope.temperatures -->
                 <div ng-repeat="temperature in temperatures">
                     <label>
-                        <input type="checkbox" ng-click="deleteTemperature(temperature._id)"> {{ temperature.value }} {{ temperature.timestamp }}
+                        <input type="checkbox" ng-click="deleteTemperature(temperature._id)"> {{ temperature.Value }} {{ temperature.Timestamp }}
                     </label>
                 </div>
 
@@ -54,9 +53,9 @@
                     <div class="form-group">
 
                         <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                        <input type="text" class="text-center" placeholder="Valore" ng-model="formData.value">
+                        <input type="text" class="text-center" placeholder="Valore" ng-model="formData.Value">
 
-                        <input type="text" class="text-center" placeholder="Timestamp" ng-model="formData.timestamp">
+                        <input type="text" class="text-center" placeholder="Timestamp" ng-model="formData.Timestamp">
 
                     <!-- createTemperature() WILL CREATE NEW TEMPERATURES -->
                     <button type="submit" class="btn btn-primary" ng-click="createTemperature()">AGGIUNGI</button>

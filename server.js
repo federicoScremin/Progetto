@@ -48,9 +48,8 @@ app.post('/api/temperatures', function(req, res) {
 
     // create a temperature, information comes from AJAX request from Angular
     Temperature.create({
-        Value : req.body.value,
-        Timestamp : req.body.timestamp,
-        done : false
+        Value : req.body.Value,
+        Timestamp : req.body.Timestamp
     }, function(err, temperature) {
         if (err)
             res.send(err);

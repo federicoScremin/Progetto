@@ -8,7 +8,7 @@ function mainController($scope, $http) {
     $http.get('/api/temperatures')
         .success(function(data) {
             $scope.temperatures = data;
-            console.log(data.body);
+            console.log(data);
         })
         .error(function(data) {
             console.log('Error: ' + data);
