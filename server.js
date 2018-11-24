@@ -26,7 +26,6 @@ app.use(methodOverride());
 
 // define model
 var Temperature = mongoose.model('Temperature', {
-    _id: String,
     Value: String,
     Timestamp: String
 });
@@ -49,14 +48,12 @@ app.post('/api/temperatures', function(req, res) {
 
     // create a temperature, information comes from AJAX request from Angular
     Temperature.create({
-        _id : req.body.id,
         Value : req.body.value,
         Timestamp : req.body.timestamp,
         done : false
     }, function(err, temperature) {
         if (err)
             res.send(err);
-
         // get and return all the todos after you create another
         Temperature.find(function(err, temperatures) {
             if (err)
@@ -74,7 +71,6 @@ app.delete('/api/temperatures/:temperatures_id', function(req, res) {
     }, function(err, todo) {
         if (err)
             res.send(err);
-
         // get and return all the todos after you create another
         Temperature.find(function(err, temperatures) {
             if (err)
@@ -82,6 +78,12 @@ app.delete('/api/temperatures/:temperatures_id', function(req, res) {
             res.json(temperatures);
         });
     });
+});
+
+
+// application
+app.get('*', function(req, res) {
+    res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
 });
 
 

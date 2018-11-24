@@ -1,0 +1,71 @@
+<!-- index.html -->
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="scotchTemperature">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title>Node/Angular Temperature App</title>
+
+    <!-- SCROLLS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+    <style>
+        html                    { overflow-y:scroll; }
+        body                    { padding-top:50px; }
+        #temperature-list              { margin-bottom:30px; }
+    </style>
+
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
+    <script src="core.js"></script>
+
+</head>
+<!-- SET THE CONTROLLER AND GET ALL TEMPERATURES -->
+<body ng-controller="mainController">
+    <div class="container">
+
+        <!-- HEADER AND TEMPERATURE COUNT -->
+        <div class="text-center">
+            <h2>TOTALE TEMPERATURE REGISTRATE: <span class="label label-info">{{ temperatures.length }}</span></h2>
+        </div>
+        <br/>
+        <!-- TEMPERATURES LIST -->
+        <div id="temperature-list" class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+
+                <!-- LOOP OVER THE TEMPERATURES IN $scope.temperatures -->
+                <div ng-repeat="temperature in temperatures">
+                    <label>
+                        <input type="checkbox" ng-click="deleteTemperature(temperature._id)"> {{ temperature.value }} {{ temperature.timestamp }}
+                    </label>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- FORM TO CREATE TEMPERATURES -->
+        <div id="temperature-form" class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <form>
+                    <div class="form-group">
+
+                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                        <input type="text" class="text-center" placeholder="Valore" ng-model="formData.value">
+
+                        <input type="text" class="text-center" placeholder="Timestamp" ng-model="formData.timestamp">
+
+                    <!-- createTemperature() WILL CREATE NEW TEMPERATURES -->
+                    <button type="submit" class="btn btn-primary" ng-click="createTemperature()">AGGIUNGI</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
