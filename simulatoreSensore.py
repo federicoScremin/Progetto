@@ -21,15 +21,16 @@ db = client["zero12_db"]
 
 # object referring to the collection "temperatures"
 collectionTemperatures = db["temperatures"]
-'''
+
 # insertion of occurrences in the db
+print("INSERIMENTO 20 TEMPERATURE CASUALI nel DATABASE MONGODB 'zero12_db' (localhost:27017):")
 for index in range(TOTAL_OCCURRENCES):
 	temp = {
 	    'Value': str(VALUES[index]),
 	    'Timestamp': str(TIMESTAMPS[index])
 	}
 	result = collectionTemperatures.insert_one(temp)
-'''
+
 # reading the occurrences in the db
 for data in collectionTemperatures.find():
 	print(data)

@@ -1,8 +1,9 @@
 // public/core.js
-var scotchTemperature = angular.module('scotchTemperature', []);
+var app = angular.module('TemperatureSensor', []);
 
 function mainController($scope, $http) {
     $scope.formData = {};
+    $scope.temperature = null;
 
     // when landing on the page, get all temperatures and show them
     $http.get('/api/temperatures')
@@ -36,7 +37,34 @@ function mainController($scope, $http) {
             })
             .error(function(data) {
                 console.log('Error: ' + data);
-            });
+        });
     };
+
+    $scope.updateTemperature = function(id){
+        //delete old temperature
+        $http.delete('/api/temperatures/' + id)
+            .success(function(data) {
+                console.log(data);
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+        });
+
+        // create updated temperature
+        $http.post('/api/temperatures', $scope.temperature)
+            .success(function(data) {
+                $scope.temperature = {}; // clear the form
+                $scope.temperatures = data;
+                console.log(data);
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+    }
+
+    // sets the temperature to use in the modal
+    $scope.setTemperature = function(temp) {
+        $scope.temperature = temp;
+    }
 
 }

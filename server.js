@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost:27017/zero12_db', {useNewUrlParser: true})
     process.exit();
 });
 
-app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
+app.use(express.static(__dirname + '/public')); // set the static files location
 app.use(morgan('dev')); // log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'})); // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); // parse application/json
@@ -39,13 +39,12 @@ app.get('/api/temperatures', function(req, res) {
         // if there is an error retrieving, send the error. nothing after res.send(err) will execute
         if (err)
             res.send(err)
-        res.json(temperatures); // return all todos in JSON format
+        res.json(temperatures); // return all temperatures in JSON format
     });
 });
 
 // create temperature and send back all temperatures after creation
 app.post('/api/temperatures', function(req, res) {
-
     // create a temperature, information comes from AJAX request from Angular
     Temperature.create({
         Value : req.body.Value,
@@ -53,7 +52,7 @@ app.post('/api/temperatures', function(req, res) {
     }, function(err, temperature) {
         if (err)
             res.send(err);
-        // get and return all the todos after you create another
+        // get and return all the temperatures after you create another
         Temperature.find(function(err, temperatures) {
             if (err)
                 res.send(err)
@@ -63,14 +62,14 @@ app.post('/api/temperatures', function(req, res) {
 
 });
 
-// delete a todo
+// delete a temperature
 app.delete('/api/temperatures/:temperatures_id', function(req, res) {
     Temperature.remove({
         _id : req.params.temperatures_id
-    }, function(err, todo) {
+    }, function(err, temperature) {
         if (err)
             res.send(err);
-        // get and return all the todos after you create another
+        // get and return all the temperatures after you create another
         Temperature.find(function(err, temperatures) {
             if (err)
                 res.send(err)

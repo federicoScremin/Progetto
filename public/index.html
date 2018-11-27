@@ -2,83 +2,130 @@
 <!doctype html>
 
 <!-- ASSIGN OUR ANGULAR MODULE -->
-<html ng-app="scotchTemperature">
-<head>
-    <!-- META -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+<html ng-app="TemperatureSensor">
+    <head>
+        <!-- META -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
 
-    <title>Node/Angular Temperature App</title>
+        <title>Node/Angular Temperature App</title>
 
-    <!-- SCROLLS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/flatly/bootstrap.min.css"><!-- load bootstrap -->
-    <style>
-        html{ overflow-y:scroll; }
-        body{font-family: 'Poppins', sans-serif;}
-        #temperature-list{ margin-bottom:30px; }
-    </style>
+        <!-- SCROLLS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/flatly/bootstrap.min.css"><!-- load bootstrap -->
+        <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
 
-    <!-- SPELLS -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
-    <script src="core.js"></script>
+        <style>
+            html{ overflow-y:scroll; }
+            body{font-family: 'Poppins', sans-serif;}
+        </style>
 
-</head>
-<!-- SET THE CONTROLLER AND GET ALL TEMPERATURES -->
-<body ng-controller="mainController" style="background-color: #f0f0f5">
-    <div class="container">
-        <div style="margin-top:20px">
-            <h2 class="text-center"><strong>INTERFACCIA SENSORE DI TEMPERATURA<strong></strong></h2>
-            <!-- FORM TO CREATE TEMPERATURES -->
-            <div class="card border-info mb-3">
-                <div class="card-header text-info" style="background-color: #f0f0f5"><h3><strong>Inserimento nuova temperatura</strong></h3></div>
-                <div class="card-body">
-                    <div id="temperature-form" class="card-text text-center">
-                        <form>
-                            <div class="form-group align-middle">
-                                <h3 class="align-middle">
-                                    <!-- BIND THIS VALUE TO formData IN ANGULAR -->
-                                    <input type="text" class="text-center" placeholder="temperatura in °C" ng-model="formData.Value">
-                                    <input type="text" class="text-center" placeholder="AAAA-MM-GG" ng-model="formData.Timestamp">
-                                    <!-- createTemperature() WILL CREATE NEW TEMPERATURE -->
-                                    <button type="submit" class="btn btn-info" ng-click="createTemperature()">AGGIUNGI</button>
-                                </h3>
+        <!-- SPELLS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script><!-- load jquery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
+        <script src="core.js"></script>
+
+    </head>
+    <!-- SET THE CONTROLLER AND GET ALL TEMPERATURES -->
+    <body ng-controller="mainController" style="background-color: #f0f0f5">
+        <div class="container">
+            <div style="margin-top:20px">
+                <h2 class="text-center"><strong>INTERFACCIA SENSORE DI TEMPERATURA<strong></strong></h2>
+                <!-- FORM TO CREATE TEMPERATURES -->
+                <div class="card border-info mb-3">
+                    <div class="card-header text-info" style="background-color: #f0f0f5"><h3><strong>Inserimento nuova temperatura</strong></h3></div>
+                        <div class="card-body">
+                            <div id="temperature-form" class="card-text text-center">
+                                <form>
+                                    <div class="form-group align-middle">
+                                        <h3 class="align-middle">
+                                            <!-- BIND THIS VALUE TO formData IN ANGULAR -->
+                                            <input type="text" class="text-center" placeholder="temperatura in °C" ng-model="formData.Value">
+                                            <input type="text" class="text-center" placeholder="AAAA-MM-GG" ng-model="formData.Timestamp">
+                                            <!-- createTemperature() WILL CREATE NEW TEMPERATURE -->
+                                            <button type="submit" class="btn btn-lg btn-outline-info align-bottom" ng-click="createTemperature()"><strong>AGGIUNGI</strong></button>
+                                        </h3>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
                 </div>
-            </div>
-            <div class="card border-info mb-3">
-                <!-- HEADER AND TEMPERATURE COUNT -->
-                <div class="card-header sticky-top text-info" style="background-color: #f0f0f5">
-                    <h3><strong>Elenco temperature registrate - Totale: <span class="badge badge-info">{{ temperatures.length }}</span></strong></h3>
-                </div>
-                <!-- TEMPERATURES LIST -->
-                <div id="temperature-list" class="card-body">
-                    <table class="table table-hover text-center">
-                        <thead class="text-center">
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col"><h4><strong>Valore (°C)</strong></h4></th>
-                                <th scope="col"><h4><strong>Timestamp</strong></h4></th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            <!-- LOOP OVER THE TEMPERATURES IN $scope.temperatures -->
-                            <tr ng-repeat="temperature in temperatures">
-                                <td>
-                                    <h6><button type="submit" class="btn btn-success" ng-click="deleteTemperature(temperature._id)">AGGIORNA</button><h6>
-                                    <button type="submit" class="btn btn-danger" ng-click="deleteTemperature(temperature._id)">ELIMINA</button>
-                                </th>
-                                <td class="align-middle"><h4>{{ temperature.Value }}</h4></td>
-                                <td class="align-middle"><h4>{{ temperature.Timestamp }}</h4></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="card border-info mb-3">
+                    <!-- HEADER AND TEMPERATURE COUNT -->
+                    <div class="card-header text-info" style="background-color: #f0f0f5">
+                        <h3><strong>Elenco temperature registrate</strong></h3>
+                    </div>
+                    <!-- TEMPERATURES LIST -->
+                    <div id="temperature-list" class="card-body">
+                        <table class="table table-hover text-center">
+                            <thead class="text-center">
+                                <tr>
+                                    <th scope="col" class="sticky-top align-middle" style="background-color: #f0f0f5"><h4><strong>TOTALE: <span class="badge badge-info"><h3>{{ temperatures.length }}</h3></span></strong></h4></th>
+                                    <th scope="col" class="sticky-top align-middle" style="background-color: #f0f0f5"><h4><strong>Valore (°C)</strong></h4></th>
+                                    <th scope="col" class="sticky-top align-middle" style="background-color: #f0f0f5"><h4><strong>Timestamp</strong></h4></th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <!-- LOOP OVER THE TEMPERATURES IN $scope.temperatures  ng-click="updateTemperature(temperature._id)" ng-click="deleteTemperature(temperature._id)"-->
+                                <tr ng-repeat="temperature in temperatures">
+                                    <td>
+                                        <h6><button type="submit" class="btn btn-lg btn-outline-success" data-toggle="modal" data-target="#updateModal" ng-click="setTemperature(temperature)">AGGIORNA</button></h6>
+                                        <h6><button type="button" class="btn btn-lg btn-outline-danger" data-toggle="modal" data-target="#deleteModal" ng-click="setTemperature(temperature)">ELIMINA</button></h6>
+                                    </th>
+                                    <td class="align-middle"><h4>{{ temperature.Value }}</h4></td>
+                                    <td class="align-middle"><h4>{{ temperature.Timestamp }}</h4></td>
+                                </tr>
+                                <!-- DeleteModal -->
+                                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title text-danger" id="deleteModalLabel"><strong>ATTENZIONE</strong></h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        <div class="modal-body">
+                                            <h4>Confermando questa azione verrà eliminata la lettura di temperatura selezionata senza possibilità di recupero dei dati cancellati.<br/>
+                                            Confermi?</h4>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-lg btn-outline-info" data-dismiss="modal">ANNULLA</button>
+                                            <button type="button" class="btn btn-lg btn-outline-danger" data-dismiss="modal" ng-click="deleteTemperature(temperature._id)">CONFERMA</button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- UpdateModal -->
+                                <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title text-success" id="updateModalLabel"><strong>AGGIORNAMENTO LETTURA</strong></h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        <div class="modal-body">
+                                            <h3>
+                                                Nuovo valore: <input type="text" name="name" ng-model="temperature.Value" /><br/><br/>
+                                                Nuovo timestamp: <input type="text" name="price" ng-model="temperature.Timestamp" />
+                                            </h3>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-lg btn-outline-info" data-dismiss="modal">ANNULLA</button>
+                                            <button type="button" class="btn btn-lg btn-outline-success" data-dismiss="modal" ng-click="updateTemperature(temperature._id)">AGGIORNA</button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
