@@ -39,7 +39,8 @@ function mainController($scope, $http) {
                 console.log('Error: ' + data);
         });
     };
-
+    
+    // update a temperature
     $scope.updateTemperature = function(id){
         //delete old temperature
         $http.delete('/api/temperatures/' + id)
