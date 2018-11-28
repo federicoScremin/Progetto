@@ -64,7 +64,7 @@ app.post('/api/temperatures', function(req, res) {
 
 // delete a temperature
 app.delete('/api/temperatures/:temperatures_id', function(req, res) {
-    Temperature.remove({
+    Temperature.deleteOne({
         _id : req.params.temperatures_id
     }, function(err, temperature) {
         if (err)
